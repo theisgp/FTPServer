@@ -44,7 +44,7 @@ public class LocalUserManager {
     }
 
     private MyUser createDefaultUser(){
-        MyUser defaultMyUser = createBaseUser("default","default","/tmp");
+        MyUser defaultMyUser = createBaseUser("default","default","/tmp/test");
         return defaultMyUser;
     }
 
