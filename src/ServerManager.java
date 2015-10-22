@@ -1,11 +1,8 @@
-import com.sun.corba.se.spi.activation.Server;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.ListenerFactory;
-import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
-import org.apache.ftpserver.usermanager.impl.BaseUser;
 
 public class ServerManager {
 
@@ -13,17 +10,16 @@ public class ServerManager {
     private FtpServerFactory factory;
     private ListenerFactory listenerFactory;
 
-    private UserManager userManager;
-    private LocalUserManager localUserManager;
-    
+    private MasterUserManager masterUserManager;
+
     private int port;
 
-    public ServerManager(){
+    public ServerManager() {
         port = 2221;
-        this.localUserManager = new LocalUserManager();
-        this.userManager = localUserManager.getUserManager();
+        this.masterUserManager = new MasterUserManager();
     }
-//    public static void main(String[] args){
+
+    //    public static void main(String[] args){
 //        ServerManager serverManger = new ServerManager();
 //        try {
 //            serverManger.startServer();
@@ -35,30 +31,24 @@ public class ServerManager {
 //    }
     public void startServer() throws FtpException {
 
-        userManager.save(localUserManager.getMyUser(0));
+        masterUserManager.getInnerUserManager().save(masterUserManager.getMyUser(0));
 
         listenerFactory = new ListenerFactory();
         listenerFactory.setPort(port);
 
         factory = new FtpServerFactory();
-        factory.setUserManager(userManager);
+        factory.setUserManager(masterUserManager.getInnerUserManager());
         factory.addListener("default", listenerFactory.createListener());
 
         server = factory.createServer();
         server.start();
     }
 
-    public String getServerInformation(){
+    public String getServerInformation() {
         String returnString = null;
-        try {
-
-            returnString = "Username: " + userManager.getUserByName("default").getName() + "\n";
-            returnString += "Password: " + localUserManager.getMyUser(0).getPassword() + "\n";
-            return returnString;
-        } catch (FtpException e) {
-            e.printStackTrace();
-            return "Error: " + e.getMessage();
-        }
+        returnString = "Username: " + masterUserManager.getMyUser(0).getName() + "\n";
+        returnString += "Password: " + masterUserManager.getMyUser(0).getPassword() + "\n";
+        return returnString;
     }
 
 

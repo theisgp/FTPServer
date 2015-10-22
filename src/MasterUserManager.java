@@ -6,20 +6,20 @@ import java.util.ArrayList;
 /**
  * Created by ubuntu on 2015-10-22.
  */
-public class LocalUserManager {
+public class MasterUserManager {
 
     private ArrayList<MyUser> myUsers;
-    private UserManager userManager;
+    private UserManager innerUserManager;
     private PropertiesUserManagerFactory userManagerFactory;
 
-    public LocalUserManager() {
+    public MasterUserManager() {
         userManagerFactory = new PropertiesUserManagerFactory();
-        userManager = userManagerFactory.createUserManager();
+        innerUserManager = userManagerFactory.createUserManager();
         myUsers = new ArrayList<>();
     }
 
-    public UserManager getUserManager() {
-        return userManager;
+    public UserManager getInnerUserManager() {
+        return innerUserManager;
     }
 
     public MyUser createBaseUser(String username, String password, String directory) {
@@ -47,5 +47,4 @@ public class LocalUserManager {
         MyUser defaultMyUser = createBaseUser("default","default","/tmp/test");
         return defaultMyUser;
     }
-
 }
