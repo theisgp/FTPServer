@@ -4,10 +4,10 @@ import org.apache.ftpserver.usermanager.impl.BaseUser;
  * Created by ubuntu on 2015-10-22.
  */
 public class MyUser extends BaseUser {
-    private String firstName;
+/*    private String firstName;
     private String username;
     private String password;
-    private String directory;
+    private String directory;*/
 
     public MyUser(String username, String password, String directory){
         this.setName(username);
