@@ -19,16 +19,6 @@ public class ServerManager {
         this.masterUserManager = new MasterUserManager();
     }
 
-    //    public static void main(String[] args){
-//        ServerManager serverManger = new ServerManager();
-//        try {
-//            serverManger.startServer();
-//            System.out.println("service successfully started");
-//        } catch (FtpException e) {
-//            System.out.println("Server failed starting...");
-//            e.printStackTrace();
-//        }
-//    }
     public void startServer() throws FtpException {
 
         masterUserManager.getInnerUserManager().save(masterUserManager.getMyUser(0));
