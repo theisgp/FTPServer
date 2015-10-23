@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
 
     private void setupContent() {
         Container contentPane = getContentPane();
-        Button startDefaultServer = new Button("Start Default Server");
+        JButton startDefaultServer = new JButton("Start Default Server");
 
         startDefaultServer.addActionListener(
                 new ActionListener() {
