@@ -1,3 +1,5 @@
+import org.apache.ftpserver.ConnectionConfig;
+import org.apache.ftpserver.ConnectionConfigFactory;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
@@ -35,8 +37,7 @@ public class ServerManager {
     }
 
     public String getServerInformation() {
-        String returnString = null;
-        returnString = "Username: " + masterUserManager.getMyUser(0).getName() + "\n";
+        String returnString = "Username: " + masterUserManager.getMyUser(0).getName() + "\n";
         returnString += "Password: " + masterUserManager.getMyUser(0).getPassword() + "\n";
         return returnString;
     }
