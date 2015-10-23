@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by ubuntu on 2015-10-22.
+ * MenuBar for the FTP application
  */
 public class FTPMenuBar extends JMenuBar {
 
@@ -41,12 +41,10 @@ public class FTPMenuBar extends JMenuBar {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
-                        JDialog dialog = new JDialog();
-//                        TODO: Fix title
-                        JOptionPane.showMessageDialog(dialog, "The most gangsta FTPServer ever seen! \n Created by Theis and Jannik");
+                        JOptionPane.showMessageDialog(null, "The most gangsta FTPServer ever seen! \n Created by Theis " +
+                                        "and Jannik", "About", JOptionPane.INFORMATION_MESSAGE);
                     }
                 });
         add(helpMenu);
     }
-
 }

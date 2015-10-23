@@ -13,7 +13,7 @@ public class MainWindow extends JFrame {
     private int height;
     private ServerManager serverManager;
 
-    public MainWindow(){
+    public MainWindow() {
         super("Gangsta FTPServer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setupContent();
@@ -23,32 +23,31 @@ public class MainWindow extends JFrame {
         start();
     }
 
-    private void start(){
-
+    private void start() {
         setJMenuBar(new FTPMenuBar());
         pack();
         setSize(width, height);
         setVisible(true);
     }
 
-    private void setupContent(){
+    private void setupContent() {
         Container contentPane = getContentPane();
         Button startDefaultServer = new Button("Start Default Server");
 
-        startDefaultServer.addActionListener(new ActionListener() {
-                                                 @Override
-                                                 public void actionPerformed(ActionEvent actionEvent) {
-                                                     serverManager = new ServerManager();
-                                                     try {
-                                                         serverManager.startServer();
-                                                         JOptionPane.showMessageDialog(new JDialog(),"Service started. \n" + serverManager.getServerInformation());
-
-                                                     } catch (FtpException e) {
-                                                         JOptionPane.showMessageDialog(new JDialog(),"Service failed to start. \n" + e.getMessage());
-                                                         e.printStackTrace();
-                                                     }
-                                                 }
-                                             }
+        startDefaultServer.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        serverManager = new ServerManager();
+                        try {
+                            serverManager.startServer();
+                            JOptionPane.showMessageDialog(null, "Service started. \n" + serverManager.getServerInformation(), "Succes", JOptionPane.PLAIN_MESSAGE);
+                        } catch (FtpException e) {
+                            JOptionPane.showMessageDialog(null, "Service failed to start. \n" + e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
+                            e.printStackTrace();
+                        }
+                    }
+                }
         );
 
         JPanel northPanel = new JPanel(new BorderLayout());
@@ -63,7 +62,6 @@ public class MainWindow extends JFrame {
 //        contentPane.add(southPanel);
 //        contentPane.add(westPanel);
     }
-
 
 
 }
