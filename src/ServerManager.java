@@ -6,7 +6,11 @@ import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.ListenerFactory;
 
+import javax.naming.ldap.Control;
+
 public class ServerManager {
+
+    private Controller controller;
 
     private FtpServer server;
     private FtpServerFactory factory;
@@ -16,14 +20,15 @@ public class ServerManager {
 
     private int port;
 
-    public ServerManager() {
+    public ServerManager(Controller controller) {
         port = 2221;
         this.masterUserManager = new MasterUserManager();
+        this.controller = controller;
     }
 
     public void startServer() throws FtpException {
 
-        masterUserManager.getInnerUserManager().save(masterUserManager.getMyUser(0));
+        masterUserManager.getInnerUserManager().save(masterUserManager.getMyUser(1));
 
         listenerFactory = new ListenerFactory();
         listenerFactory.setPort(port);
@@ -40,6 +45,10 @@ public class ServerManager {
         String returnString = "Username: " + masterUserManager.getMyUser(0).getName() + "\n";
         returnString += "Password: " + masterUserManager.getMyUser(0).getPassword() + "\n";
         return returnString;
+    }
+
+    public MasterUserManager getMasterUserManager(){
+        return masterUserManager;
     }
 
 

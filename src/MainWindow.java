@@ -1,20 +1,26 @@
-import com.sun.corba.se.spi.activation.Server;
 import org.apache.ftpserver.ftplet.FtpException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ListSelectionListener {
     private int width;
     private int height;
-    private ServerManager serverManager;
+    private Controller controller;
 
-    public MainWindow() {
+    private JList userList;
+    private JLabel usernameLabel;
+    private JLabel directoryLabel;
+
+    public MainWindow(Controller controller) {
         super("Gangsta FTPServer");
+        this.controller = controller;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setupContent();
         width = 800;
@@ -32,16 +38,39 @@ public class MainWindow extends JFrame {
 
     private void setupContent() {
         Container contentPane = getContentPane();
+        JPanel panel = new JPanel(new BorderLayout());
+        contentPane.add(panel);
+//        TODO fix leftPanel layout
+        JPanel leftPanel = new JPanel(new FlowLayout());
+        JPanel middPanel = new JPanel(new BorderLayout());
+        JPanel rightPanel = new JPanel(new FlowLayout());
+
+        JPanel middLeftPanel = new JPanel(new FlowLayout());
+        JPanel middRightPanel = new JPanel(new FlowLayout());
+
+
+        panel.add(leftPanel, BorderLayout.WEST);
+        panel.add(middPanel, BorderLayout.CENTER);
+        panel.add(rightPanel, BorderLayout.EAST);
+
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Users"));
+        middLeftPanel.setBorder(BorderFactory.createTitledBorder("Config"));
+        middRightPanel.setBorder(BorderFactory.createTitledBorder("Server State"));
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Misc"));
+
+        middPanel.add(middLeftPanel,BorderLayout.WEST);
+        middPanel.add(middRightPanel,BorderLayout.CENTER);
+
+
         JButton startDefaultServer = new JButton("Start Default Server");
 
         startDefaultServer.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
-                        serverManager = new ServerManager();
                         try {
-                            serverManager.startServer();
-                            JOptionPane.showMessageDialog(null, "Service started. \n" + serverManager.getServerInformation(), "Succes", JOptionPane.PLAIN_MESSAGE);
+                            controller.getServerManager().startServer();
+                            JOptionPane.showMessageDialog(null, "Service started. \n" + controller.getServerManager().getServerInformation(), "Succes", JOptionPane.PLAIN_MESSAGE);
                         } catch (FtpException e) {
                             JOptionPane.showMessageDialog(null, "Service failed to start. \n" + e.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
                             e.printStackTrace();
@@ -49,19 +78,40 @@ public class MainWindow extends JFrame {
                     }
                 }
         );
+        rightPanel.add(startDefaultServer);
+        middLeftPanel.add(new JLabel("List of current users"));
+        String[] stringsOfDoom = {"Jannik","Theis","Asbjørn"};
 
-        JPanel northPanel = new JPanel(new BorderLayout());
-//        JPanel eastPanel = new JPanel(new BorderLayout());
-//        JPanel southPanel = new JPanel(new BorderLayout());
-//        JPanel westPanel = new JPanel(new BorderLayout());
 
-        northPanel.add(startDefaultServer, BorderLayout.NORTH);
-//        startDefaultServer.setSize(1,1);
-        contentPane.add(northPanel);
-//        contentPane.add(eastPanel);
-//        contentPane.add(southPanel);
-//        contentPane.add(westPanel);
+        ArrayList<MyUser> testArray = controller.getServerManager().getMasterUserManager().getMyUsers();
+
+        DefaultListModel testModel = new DefaultListModel();
+        controller.getServerManager().getMasterUserManager().createBaseUser("Jannik", "1234", "/tmp/test");
+        controller.getServerManager().getMasterUserManager().createBaseUser("Theis", "1234", "/tmp/test");
+
+        for(MyUser user: testArray){
+            testModel.addElement(user);
+        }
+        userList = new JList(testModel);
+        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userList.setVisibleRowCount(10);
+        userList.addListSelectionListener(this);
+        JScrollPane listScrollPane = new JScrollPane(userList);
+        leftPanel.add(listScrollPane);
+//        leftPanel.add()
+        usernameLabel = new JLabel();
+        directoryLabel = new JLabel();
+
+        leftPanel.add(usernameLabel);
+        leftPanel.add(directoryLabel);
+
+
     }
 
-
+    @Override
+    public void valueChanged(ListSelectionEvent listSelectionEvent) {
+        int listIndex = userList.getSelectedIndex();
+        usernameLabel.setText(controller.getServerManager().getMasterUserManager().getMyUser(listIndex).getName());
+        directoryLabel.setText(controller.getServerManager().getMasterUserManager().getMyUser(listIndex).getHomeDirectory());
+    }
 }

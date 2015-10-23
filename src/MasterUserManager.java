@@ -26,9 +26,6 @@ public class MasterUserManager {
 
         MyUser myUser = new MyUser(username, password, directory);
 
-        System.out.println("Name: " + myUser.getName());
-        System.out.println("Password: " + myUser.getPassword());
-
         myUsers.add(myUser);
         return myUser;
     }
@@ -46,5 +43,9 @@ public class MasterUserManager {
     private MyUser createDefaultUser(){
         MyUser defaultMyUser = createBaseUser("default","default","/tmp/test");
         return defaultMyUser;
+    }
+
+    public ArrayList<MyUser> getMyUsers(){
+        return myUsers;
     }
 }
