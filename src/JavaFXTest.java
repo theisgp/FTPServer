@@ -29,13 +29,13 @@ public class JavaFXTest extends Application {
 
         stage.show();
         fxmlController = new FXMLController();
-        fxmlController.initialize();
+//        fxmlController.initialize();
 
 
     }
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        // Button was clicked, do something...ff
+        // Button was clicked, do something...
     }
 
 
