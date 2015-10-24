@@ -12,6 +12,7 @@ public class Controller {
     private void initialize() {
         serverManager = new ServerManager(this);
         mainWindow = new MainWindow(this);
+
     }
 
     public ServerManager getServerManager(){
