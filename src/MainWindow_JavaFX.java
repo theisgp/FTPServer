@@ -3,40 +3,33 @@
  */
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class JavaFXTest extends Application {
+public class MainWindow_JavaFX extends Application {
 
-    private FXMLController fxmlController;
+    public static ServerManager serverManager;
+
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(MainWindow_JavaFX.class, (java.lang.String[])null);
+    }
+
+    public MainWindow_JavaFX(){
+        serverManager = new ServerManager();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("UserInterface.fxml"));
 
-        Scene scene = new Scene(root, 640, 400);
+        Scene scene = new Scene(root, 800, 450);
 
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("Gangsta FTPServer");
         stage.setScene(scene);
 
         stage.show();
-        fxmlController = new FXMLController();
-//        fxmlController.initialize();
-
-
     }
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        // Button was clicked, do something...
-    }
-
-
 }

@@ -1,3 +1,4 @@
+/*
 import org.apache.ftpserver.ftplet.FtpException;
 
 import javax.swing.*;
@@ -12,13 +13,13 @@ import java.util.ArrayList;
 public class MainWindow extends JFrame implements ListSelectionListener {
     private int width;
     private int height;
-    private Controller controller;
+    private Old.Controller controller;
 
     private JList userList;
     private JLabel usernameLabel;
     private JLabel directoryLabel;
 
-    public MainWindow(Controller controller) {
+    public MainWindow(Old.Controller controller) {
         super("Gangsta FTPServer");
         this.controller = controller;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,7 +31,7 @@ public class MainWindow extends JFrame implements ListSelectionListener {
     }
 
     private void start() {
-        setJMenuBar(new FTPMenuBar());
+        setJMenuBar(new Old.FTPMenuBar());
         pack();
         setSize(width, height);
         setVisible(true);
@@ -114,4 +115,4 @@ public class MainWindow extends JFrame implements ListSelectionListener {
         usernameLabel.setText(controller.getServerManager().getMasterUserManager().getMyUser(listIndex).getName());
         directoryLabel.setText(controller.getServerManager().getMasterUserManager().getMyUser(listIndex).getHomeDirectory());
     }
-}
+}*/

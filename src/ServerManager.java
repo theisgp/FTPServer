@@ -1,16 +1,10 @@
-import org.apache.ftpserver.ConnectionConfig;
-import org.apache.ftpserver.ConnectionConfigFactory;
+//import Old.Controller;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
-import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.ListenerFactory;
 
-import javax.naming.ldap.Control;
-
 public class ServerManager {
-
-    private Controller controller;
 
     private FtpServer server;
     private FtpServerFactory factory;
@@ -20,25 +14,30 @@ public class ServerManager {
 
     private int port;
 
-    public ServerManager(Controller controller) {
+    public ServerManager() {
         port = 2221;
         this.masterUserManager = new MasterUserManager();
-        this.controller = controller;
+
+        factory = new FtpServerFactory();
+        listenerFactory = new ListenerFactory();
+        server = factory.createServer();
     }
 
     public void startServer() throws FtpException {
+        for(MyUser user: masterUserManager.getMyUsers()){
+            masterUserManager.getInnerUserManager().save(user);
+        }
+//        masterUserManager.getInnerUserManager().save(masterUserManager.getMyUser(1));
 
-        masterUserManager.getInnerUserManager().save(masterUserManager.getMyUser(1));
-
-        listenerFactory = new ListenerFactory();
         listenerFactory.setPort(port);
-
-        factory = new FtpServerFactory();
         factory.setUserManager(masterUserManager.getInnerUserManager());
         factory.addListener("default", listenerFactory.createListener());
 
-        server = factory.createServer();
         server.start();
+    }
+
+    public void stopServer() throws FtpException {
+        server.stop();
     }
 
     public String getServerInformation() {
@@ -49,6 +48,14 @@ public class ServerManager {
 
     public MasterUserManager getMasterUserManager(){
         return masterUserManager;
+    }
+
+    public FtpServer getServer(){
+        return server;
+    }
+
+    public int getPort(){
+        return port;
     }
 
 
