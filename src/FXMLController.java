@@ -53,6 +53,9 @@ public class FXMLController {
     private TextField textFieldUsername;
 
     @FXML
+    private TextField textFieldPassword;
+
+    @FXML
     private TextField textFieldPort;
 
 //    private Controller controller;
@@ -123,7 +126,9 @@ public class FXMLController {
             @Override
             public void handle(MouseEvent event) {
                 textFieldUsername.setText(listViewUsers.getSelectionModel().getSelectedItem().getName());
+                textFieldPassword.setText(listViewUsers.getSelectionModel().getSelectedItem().getPassword());
                 textFieldDirectory.setText(listViewUsers.getSelectionModel().getSelectedItem().getHomeDirectory());
+                textFieldPassword.setDisable(false);
             }
         });
 

@@ -24,7 +24,7 @@ public class MasterUserManager {
 
     public MyUser createBaseUser(String username, String password, String directory) {
 
-        MyUser myUser = new MyUser(username, password, directory);
+        MyUser myUser = new MyUser(username, password, "/tmp/"+username);
 
         myUsers.add(myUser);
         return myUser;
