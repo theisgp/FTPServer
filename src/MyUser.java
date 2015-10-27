@@ -12,7 +12,8 @@ public class MyUser extends BaseUser {
     public MyUser(String username, String password, String directory){
         this.setName(username);
         this.setPassword(password);
-        this.setHomeDirectory(directory);
+//        TODO Refacor this, in order to have only one way to create MyUser objects
+        this.setHomeDirectory("/tmp/"+username);
     }
 
 /*    public String getUsername(){

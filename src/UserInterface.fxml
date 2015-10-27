@@ -68,8 +68,8 @@
                                                 <ListView fx:id="listViewUsers" prefHeight="153.0" prefWidth="182.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                 <ButtonBar buttonMinWidth="56.0" layoutX="11.0" layoutY="306.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                                    <buttons>
-                                                      <Button disable="true" mnemonicParsing="false" text="Delete" textAlignment="CENTER" />
-                                                      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="New" textAlignment="CENTER" />
+                                                      <Button fx:id="buttonUserDelete" disable="true" mnemonicParsing="false" text="Delete" textAlignment="CENTER" />
+                                                      <Button fx:id="buttonUserNew" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="New" textAlignment="CENTER" />
                                                    </buttons>
                                                 </ButtonBar>
                                              </children>
@@ -96,7 +96,7 @@
                                     <TextField fx:id="textFieldDirectory" disable="true" layoutX="16.0" layoutY="166.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                     <ButtonBar layoutX="41.0" layoutY="288.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                       <buttons>
-                                        <Button mnemonicParsing="false" text="Save" />
+                                        <Button fx:id="buttonUserSave" mnemonicParsing="false" text="Save" />
                                       </buttons>
                                     </ButtonBar>
                                  </children>
@@ -134,9 +134,6 @@
                                                     <Button fx:id="buttonServerStop" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" prefHeight="26.0" text="Stop" />
                                                       <Button fx:id="buttonServerStart" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Start" textAlignment="CENTER" />
                                                   </buttons>
-                                                   <padding>
-                                                      <Insets left="20.0" right="20.0" />
-                                                   </padding>
                                                 </ButtonBar>
                                                 <Label fx:id="labelServerRunning" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="66.0" text="Server is not running" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                                              </children>
